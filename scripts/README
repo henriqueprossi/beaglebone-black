@@ -1,0 +1,5 @@
+Scripts para formatação do microSD card para uso na BeagleBone Black.
+
+Uso:
+
+$ ./format_sd_card.sh <device>
