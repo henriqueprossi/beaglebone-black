@@ -46,16 +46,5 @@ else
   echo "Particao ${PARTITION1} nao encontrada!"
 fi
 
-#$ sudo fdisk -l /dev/sdb
-
-#Disk /dev/sdb: 3951 MB, 3951034368 bytes
-#255 heads, 63 sectors/track, 480 cylinders, total 7716864 sectors
-#Units = sectors of 1 * 512 = 512 bytes
-#Sector size (logical/physical): 512 bytes / 512 bytes
-#I/O size (minimum/optimal): 512 bytes / 512 bytes
-#Disk identifier: 0x00000000
-
-#   Device Boot      Start         End      Blocks   Id  System
-#/dev/sdb1   *          63      144584       72261    c  W95 FAT32 (LBA)
-#/dev/sdb2          160650     7711199     3775275   83  Linux
+sfdisk --re-read ${DRIVE}
 
