@@ -1,13 +1,20 @@
 # Configuracao para utilizar a imagem zImage do kernel.
 
 kernel_file=zImage
-console=ttyO0,115200n8
+fdtfile=am335x-boneblack.dtb
+console=ttyS0,115200n8
 mmcroot=/dev/mmcblk0p2 rw
 mmcrootfstype=ext4 rootwait
 
-loadzimage=load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${kernel_file}
-loadfdt=load mmc ${mmcdev}:${mmcpart} ${fdtaddr} /dtbs/${fdtfile}
+loadaddr=0x80007fc0
+fdtaddr=0x80F80000
 
-mmcargs=setenv bootargs console=${console} root=${mmcroot} rootfstype=${mmcrootfstype} ${optargs}
-uenvcmd=run loadzimage; run loadfdt; run mmcargs; bootz ${loadaddr} - ${fdtaddr}
+#optargs=capemgr.disable_partno=BB-BONELT-HDMI,BB-BONELT-HDMIN
+optargs=
+mmcargs=setenv bootargs console=${console} ${optargs} root=${mmcroot} rootfstype=${mmcrootfstype}
 
+loadzimage=fatload mmc 0:1 ${loadaddr} ${kernel_file}
+loadfdt=fatload mmc 0:1 ${fdtaddr} /dtbs/${fdtfile}
+fdtboot=run mmcargs; bootz ${loadaddr} - ${fdtaddr}
+
+uenvcmd=run loadzimage; run loadfdt; run fdtboot
